@@ -37,7 +37,7 @@ int main(int argc, char** argv){
         return EXIT_FAILURE;
     }
 
-    printf("start port: %d", startPort);
+    printf("start port: %d\n", startPort);
 
     // Creating socket file descriptor
     if ((sockfd = socket(AF_INET, SOCK_DGRAM, 0)) < 0 ) {
@@ -61,6 +61,7 @@ int main(int argc, char** argv){
     select(sockfd+1, &read_fds, NULL, NULL, NULL);
 
     if(FD_ISSET(sockfd, &read_fds)) {
+        //Currently has MAXLINE so will include "trash"
         recvfrom(sockfd, (char *)buffer, MAXLINE, MSG_WAITALL, ( struct sockaddr *) &cliaddr, &clilen);
     }
 
