@@ -60,10 +60,13 @@ int main(int argc, char** argv){
     FD_SET(sockfd, &read_fds);
     select(sockfd+1, &read_fds, NULL, NULL, NULL);
 
+    int n;
     if(FD_ISSET(sockfd, &read_fds)) {
         //Currently has MAXLINE so will include "trash"
-        recvfrom(sockfd, (char *)buffer, MAXLINE, MSG_WAITALL, ( struct sockaddr *) &cliaddr, &clilen);
+        n = recvfrom(sockfd, (char *)buffer, MAXLINE, MSG_WAITALL, ( struct sockaddr *) &cliaddr, &clilen);
     }
+
+    buffer[n-1] = '\0';
 
     printf("Message received: %s\n", buffer);
 
